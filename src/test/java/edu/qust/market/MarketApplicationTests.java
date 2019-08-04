@@ -1,4 +1,4 @@
-package com.qust.market;
+package edu.qust.market;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
