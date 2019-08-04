@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.qust.market.mapper.File_formMapper" >
+  <resultMap id="BaseResultMap" type="edu.qust.market.bean.File_form" >
+    <id column="_id" property="id" jdbcType="INTEGER" />
+    <result column="_file_name" property="fileName" jdbcType="VARCHAR" />
+    <result column="_url" property="url" jdbcType="VARCHAR" />
+    <result column="_type_id" property="typeId" jdbcType="INTEGER" />
+    <result column="_table" property="table" jdbcType="VARCHAR" />
+    <result column="_table_id" property="tableId" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    _id, _file_name, _url, _type_id, _table, _table_id
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="edu.qust.market.bean.File_formExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_file_form
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart >= 0" >
+      limit ${limitStart} , ${pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_file_form
+    where _id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from tb_file_form
+    where _id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="edu.qust.market.bean.File_formExample" >
+    delete from tb_file_form
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="edu.qust.market.bean.File_form" useGeneratedKeys="true" keyProperty="id" >
+    insert into tb_file_form (_id, _file_name, _url, 
+      _type_id, _table, _table_id
+      )
+    values (#{id,jdbcType=INTEGER}, #{fileName,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, 
+      #{typeId,jdbcType=INTEGER}, #{table,jdbcType=VARCHAR}, #{tableId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="edu.qust.market.bean.File_form" useGeneratedKeys="true" keyProperty="id" >
+    insert into tb_file_form
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        _id,
+      </if>
+      <if test="fileName != null" >
+        _file_name,
+      </if>
+      <if test="url != null" >
+        _url,
+      </if>
+      <if test="typeId != null" >
+        _type_id,
+      </if>
+      <if test="table != null" >
+        _table,
+      </if>
+      <if test="tableId != null" >
+        _table_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="fileName != null" >
+        #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="table != null" >
+        #{table,jdbcType=VARCHAR},
+      </if>
+      <if test="tableId != null" >
+        #{tableId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="edu.qust.market.bean.File_formExample" resultType="java.lang.Integer" >
+    select count(*) from tb_file_form
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_file_form
+    <set >
+      <if test="record.id != null" >
+        _id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.fileName != null" >
+        _file_name = #{record.fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null" >
+        _url = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.typeId != null" >
+        _type_id = #{record.typeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.table != null" >
+        _table = #{record.table,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tableId != null" >
+        _table_id = #{record.tableId,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_file_form
+    set _id = #{record.id,jdbcType=INTEGER},
+      _file_name = #{record.fileName,jdbcType=VARCHAR},
+      _url = #{record.url,jdbcType=VARCHAR},
+      _type_id = #{record.typeId,jdbcType=INTEGER},
+      _table = #{record.table,jdbcType=VARCHAR},
+      _table_id = #{record.tableId,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.qust.market.bean.File_form" >
+    update tb_file_form
+    <set >
+      <if test="fileName != null" >
+        _file_name = #{fileName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        _url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="typeId != null" >
+        _type_id = #{typeId,jdbcType=INTEGER},
+      </if>
+      <if test="table != null" >
+        _table = #{table,jdbcType=VARCHAR},
+      </if>
+      <if test="tableId != null" >
+        _table_id = #{tableId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where _id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.qust.market.bean.File_form" >
+    update tb_file_form
+    set _file_name = #{fileName,jdbcType=VARCHAR},
+      _url = #{url,jdbcType=VARCHAR},
+      _type_id = #{typeId,jdbcType=INTEGER},
+      _table = #{table,jdbcType=VARCHAR},
+      _table_id = #{tableId,jdbcType=INTEGER}
+    where _id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

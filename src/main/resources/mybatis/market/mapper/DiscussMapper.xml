@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.qust.market.mapper.DiscussMapper" >
+  <resultMap id="BaseResultMap" type="edu.qust.market.bean.Discuss" >
+    <id column="DISCUSS_ID" property="discussId" jdbcType="BIGINT" />
+    <result column="DISCUSS_DESC" property="discussDesc" jdbcType="VARCHAR" />
+    <result column="DISCUSS_TIME" property="discussTime" jdbcType="BIGINT" />
+    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="STUFF_ID" property="stuffId" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    DISCUSS_ID, DISCUSS_DESC, DISCUSS_TIME, USER_ID, STUFF_ID
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="edu.qust.market.bean.DiscussExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_discuss
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart >= 0" >
+      limit ${limitStart} , ${pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_discuss
+    where DISCUSS_ID = #{discussId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_discuss
+    where DISCUSS_ID = #{discussId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="edu.qust.market.bean.DiscussExample" >
+    delete from tb_discuss
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="edu.qust.market.bean.Discuss" useGeneratedKeys="true" keyProperty="id" >
+    insert into tb_discuss (DISCUSS_ID, DISCUSS_DESC, DISCUSS_TIME, 
+      USER_ID, STUFF_ID)
+    values (#{discussId,jdbcType=BIGINT}, #{discussDesc,jdbcType=VARCHAR}, #{discussTime,jdbcType=BIGINT}, 
+      #{userId,jdbcType=BIGINT}, #{stuffId,jdbcType=BIGINT})
+  </insert>
+  <insert id="insertSelective" parameterType="edu.qust.market.bean.Discuss" useGeneratedKeys="true" keyProperty="id" >
+    insert into tb_discuss
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="discussId != null" >
+        DISCUSS_ID,
+      </if>
+      <if test="discussDesc != null" >
+        DISCUSS_DESC,
+      </if>
+      <if test="discussTime != null" >
+        DISCUSS_TIME,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="stuffId != null" >
+        STUFF_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="discussId != null" >
+        #{discussId,jdbcType=BIGINT},
+      </if>
+      <if test="discussDesc != null" >
+        #{discussDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="discussTime != null" >
+        #{discussTime,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="stuffId != null" >
+        #{stuffId,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="edu.qust.market.bean.DiscussExample" resultType="java.lang.Integer" >
+    select count(*) from tb_discuss
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_discuss
+    <set >
+      <if test="record.discussId != null" >
+        DISCUSS_ID = #{record.discussId,jdbcType=BIGINT},
+      </if>
+      <if test="record.discussDesc != null" >
+        DISCUSS_DESC = #{record.discussDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.discussTime != null" >
+        DISCUSS_TIME = #{record.discussTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.stuffId != null" >
+        STUFF_ID = #{record.stuffId,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_discuss
+    set DISCUSS_ID = #{record.discussId,jdbcType=BIGINT},
+      DISCUSS_DESC = #{record.discussDesc,jdbcType=VARCHAR},
+      DISCUSS_TIME = #{record.discussTime,jdbcType=BIGINT},
+      USER_ID = #{record.userId,jdbcType=BIGINT},
+      STUFF_ID = #{record.stuffId,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.qust.market.bean.Discuss" >
+    update tb_discuss
+    <set >
+      <if test="discussDesc != null" >
+        DISCUSS_DESC = #{discussDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="discussTime != null" >
+        DISCUSS_TIME = #{discussTime,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="stuffId != null" >
+        STUFF_ID = #{stuffId,jdbcType=BIGINT},
+      </if>
+    </set>
+    where DISCUSS_ID = #{discussId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.qust.market.bean.Discuss" >
+    update tb_discuss
+    set DISCUSS_DESC = #{discussDesc,jdbcType=VARCHAR},
+      DISCUSS_TIME = #{discussTime,jdbcType=BIGINT},
+      USER_ID = #{userId,jdbcType=BIGINT},
+      STUFF_ID = #{stuffId,jdbcType=BIGINT}
+    where DISCUSS_ID = #{discussId,jdbcType=BIGINT}
+  </update>
+</mapper>

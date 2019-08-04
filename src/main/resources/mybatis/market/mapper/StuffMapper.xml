@@ -1,0 +1,279 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="edu.qust.market.mapper.StuffMapper" >
+  <resultMap id="BaseResultMap" type="edu.qust.market.bean.Stuff" >
+    <id column="STUFF_ID" property="stuffId" jdbcType="BIGINT" />
+    <result column="STUFF_NAME" property="stuffName" jdbcType="VARCHAR" />
+    <result column="STUFF_INFO" property="stuffInfo" jdbcType="VARCHAR" />
+    <result column="STUFF_PRICE" property="stuffPrice" jdbcType="DOUBLE" />
+    <result column="STUFF_ACTIVE" property="stuffActive" jdbcType="INTEGER" />
+    <result column="USER_ID" property="userId" jdbcType="BIGINT" />
+    <result column="CATE_ID" property="cateId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="BIGINT" />
+    <result column="MODIFY_TIME" property="modifyTime" jdbcType="BIGINT" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    STUFF_ID, STUFF_NAME, STUFF_INFO, STUFF_PRICE, STUFF_ACTIVE, USER_ID, CATE_ID, CREATE_TIME, 
+    MODIFY_TIME
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="edu.qust.market.bean.StuffExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from tb_stuff
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart >= 0" >
+      limit ${limitStart} , ${pageSize}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_stuff
+    where STUFF_ID = #{stuffId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_stuff
+    where STUFF_ID = #{stuffId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="edu.qust.market.bean.StuffExample" >
+    delete from tb_stuff
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="edu.qust.market.bean.Stuff" useGeneratedKeys="true" keyProperty="id" >
+    insert into tb_stuff (STUFF_ID, STUFF_NAME, STUFF_INFO, 
+      STUFF_PRICE, STUFF_ACTIVE, USER_ID, 
+      CATE_ID, CREATE_TIME, MODIFY_TIME
+      )
+    values (#{stuffId,jdbcType=BIGINT}, #{stuffName,jdbcType=VARCHAR}, #{stuffInfo,jdbcType=VARCHAR}, 
+      #{stuffPrice,jdbcType=DOUBLE}, #{stuffActive,jdbcType=INTEGER}, #{userId,jdbcType=BIGINT}, 
+      #{cateId,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, #{modifyTime,jdbcType=BIGINT}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="edu.qust.market.bean.Stuff" useGeneratedKeys="true" keyProperty="id" >
+    insert into tb_stuff
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stuffId != null" >
+        STUFF_ID,
+      </if>
+      <if test="stuffName != null" >
+        STUFF_NAME,
+      </if>
+      <if test="stuffInfo != null" >
+        STUFF_INFO,
+      </if>
+      <if test="stuffPrice != null" >
+        STUFF_PRICE,
+      </if>
+      <if test="stuffActive != null" >
+        STUFF_ACTIVE,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+      <if test="cateId != null" >
+        CATE_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stuffId != null" >
+        #{stuffId,jdbcType=BIGINT},
+      </if>
+      <if test="stuffName != null" >
+        #{stuffName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuffInfo != null" >
+        #{stuffInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="stuffPrice != null" >
+        #{stuffPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="stuffActive != null" >
+        #{stuffActive,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="cateId != null" >
+        #{cateId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=BIGINT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="edu.qust.market.bean.StuffExample" resultType="java.lang.Integer" >
+    select count(*) from tb_stuff
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update tb_stuff
+    <set >
+      <if test="record.stuffId != null" >
+        STUFF_ID = #{record.stuffId,jdbcType=BIGINT},
+      </if>
+      <if test="record.stuffName != null" >
+        STUFF_NAME = #{record.stuffName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuffInfo != null" >
+        STUFF_INFO = #{record.stuffInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stuffPrice != null" >
+        STUFF_PRICE = #{record.stuffPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.stuffActive != null" >
+        STUFF_ACTIVE = #{record.stuffActive,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=BIGINT},
+      </if>
+      <if test="record.cateId != null" >
+        CATE_ID = #{record.cateId,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyTime != null" >
+        MODIFY_TIME = #{record.modifyTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update tb_stuff
+    set STUFF_ID = #{record.stuffId,jdbcType=BIGINT},
+      STUFF_NAME = #{record.stuffName,jdbcType=VARCHAR},
+      STUFF_INFO = #{record.stuffInfo,jdbcType=VARCHAR},
+      STUFF_PRICE = #{record.stuffPrice,jdbcType=DOUBLE},
+      STUFF_ACTIVE = #{record.stuffActive,jdbcType=INTEGER},
+      USER_ID = #{record.userId,jdbcType=BIGINT},
+      CATE_ID = #{record.cateId,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=BIGINT},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=BIGINT}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="edu.qust.market.bean.Stuff" >
+    update tb_stuff
+    <set >
+      <if test="stuffName != null" >
+        STUFF_NAME = #{stuffName,jdbcType=VARCHAR},
+      </if>
+      <if test="stuffInfo != null" >
+        STUFF_INFO = #{stuffInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="stuffPrice != null" >
+        STUFF_PRICE = #{stuffPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="stuffActive != null" >
+        STUFF_ACTIVE = #{stuffActive,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=BIGINT},
+      </if>
+      <if test="cateId != null" >
+        CATE_ID = #{cateId,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        MODIFY_TIME = #{modifyTime,jdbcType=BIGINT},
+      </if>
+    </set>
+    where STUFF_ID = #{stuffId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="edu.qust.market.bean.Stuff" >
+    update tb_stuff
+    set STUFF_NAME = #{stuffName,jdbcType=VARCHAR},
+      STUFF_INFO = #{stuffInfo,jdbcType=VARCHAR},
+      STUFF_PRICE = #{stuffPrice,jdbcType=DOUBLE},
+      STUFF_ACTIVE = #{stuffActive,jdbcType=INTEGER},
+      USER_ID = #{userId,jdbcType=BIGINT},
+      CATE_ID = #{cateId,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=BIGINT},
+      MODIFY_TIME = #{modifyTime,jdbcType=BIGINT}
+    where STUFF_ID = #{stuffId,jdbcType=BIGINT}
+  </update>
+</mapper>
