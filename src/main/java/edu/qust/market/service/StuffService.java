@@ -25,7 +25,8 @@ public class StuffService {
     @Autowired
     private File_formMapper file_formMapper;
 
-    public void selectStuff(WebModel webModel){
+    //查询所有并封入图片1
+    public void selectAll(WebModel webModel){
         StuffExample stuffExample = new StuffExample();
         stuffExample.setLimitStart(webModel.getLimitStart());
         stuffExample.setPageSize(webModel.getPs());
@@ -33,9 +34,35 @@ public class StuffService {
         webModel.setTotalCount(count);
         List<Stuff> list = stuffMapper.selectByExample(stuffExample);
         List<JSONObject> newlist = new ArrayList<>();
+        setStuffImg(list, newlist);
+        webModel.setData(newlist);
+    }
+
+
+
+    public Stuff selectStuffById(Long id){
+        return stuffMapper.selectByPrimaryKey(id);
+    }
+
+    public void getStuffByCategory(Long cid,WebModel webModel){
+        StuffExample stuffExample = new StuffExample();
+        StuffExample.Criteria sec = stuffExample.createCriteria();
+        sec.andCateIdEqualTo(cid);
+        stuffExample.setLimitStart(webModel.getLimitStart());
+        stuffExample.setPageSize(webModel.getPs());
+        int count = stuffMapper.countByExample(stuffExample);
+        webModel.setTotalCount(count);
+        List<Stuff> list = stuffMapper.selectByExample(stuffExample);
+        List<JSONObject> newlist = new ArrayList<>();
+        setStuffImg(list, newlist);
+        webModel.setData(newlist);
+    }
+
+
+    //向返回数据中添加图片
+    public void setStuffImg(List<Stuff> list, List<JSONObject> newlist) {
         for(Stuff s : list){
             File_formExample file_formExample = new File_formExample();
-            file_formExample.setPageSize(1);
             File_formExample.Criteria fec = file_formExample.createCriteria();
             fec.andTableEqualTo("tb_stuff");
             fec.andTableIdEqualTo(s.getStuffId().intValue());
@@ -43,6 +70,5 @@ public class StuffService {
             jo.put("file",file_formMapper.selectByExample(file_formExample));
             newlist.add(jo);
         }
-        webModel.setData(newlist);
     }
 }

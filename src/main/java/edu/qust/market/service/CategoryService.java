@@ -18,4 +18,9 @@ public class CategoryService {
         CategoryExample categoryExample = new CategoryExample();
         return categoryMapper.selectByExample(categoryExample);
     }
+
+    public Category getCategoryById(Long id){
+        CategoryExample categoryExample = new CategoryExample();
+        return categoryMapper.selectByPrimaryKey(id);
+    }
 }

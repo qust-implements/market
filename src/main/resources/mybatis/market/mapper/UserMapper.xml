@@ -3,12 +3,16 @@
 <mapper namespace="edu.qust.market.mapper.UserMapper" >
   <resultMap id="BaseResultMap" type="edu.qust.market.bean.User" >
     <id column="_id" property="id" jdbcType="INTEGER" />
-    <result column="_name" property="name" jdbcType="VARCHAR" />
+    <result column="_openid" property="openid" jdbcType="VARCHAR" />
+    <result column="_nickName" property="nickname" jdbcType="VARCHAR" />
     <result column="_address" property="address" jdbcType="VARCHAR" />
     <result column="_school" property="school" jdbcType="VARCHAR" />
     <result column="_phone" property="phone" jdbcType="VARCHAR" />
-    <result column="_sex" property="sex" jdbcType="INTEGER" />
-    <result column="_icon_id" property="iconId" jdbcType="VARCHAR" />
+    <result column="_gender" property="gender" jdbcType="INTEGER" />
+    <result column="_city" property="city" jdbcType="VARCHAR" />
+    <result column="_province" property="province" jdbcType="VARCHAR" />
+    <result column="_country" property="country" jdbcType="VARCHAR" />
+    <result column="_avatarUrl" property="avatarurl" jdbcType="VARCHAR" />
     <result column="_true_name" property="trueName" jdbcType="VARCHAR" />
     <result column="_qq" property="qq" jdbcType="VARCHAR" />
     <result column="_wechat" property="wechat" jdbcType="VARCHAR" />
@@ -73,8 +77,8 @@
     </where>
   </sql>
   <sql id="Base_Column_List" >
-    _id, _name, _address, _school, _phone, _sex, _icon_id, _true_name, _qq, _wechat, 
-    _active
+    _id, _openid, _nickName, _address, _school, _phone, _gender, _city, _province, _country, 
+    _avatarUrl, _true_name, _qq, _wechat, _active
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="edu.qust.market.bean.UserExample" >
     select
@@ -110,14 +114,16 @@
     </if>
   </delete>
   <insert id="insert" parameterType="edu.qust.market.bean.User" useGeneratedKeys="true" keyProperty="id" >
-    insert into tb_user (_id, _name, _address, 
-      _school, _phone, _sex, 
-      _icon_id, _true_name, _qq, 
-      _wechat, _active)
-    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
-      #{school,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{sex,jdbcType=INTEGER}, 
-      #{iconId,jdbcType=VARCHAR}, #{trueName,jdbcType=VARCHAR}, #{qq,jdbcType=VARCHAR}, 
-      #{wechat,jdbcType=VARCHAR}, #{active,jdbcType=INTEGER})
+    insert into tb_user (_id, _openid, _nickName, 
+      _address, _school, _phone, 
+      _gender, _city, _province, 
+      _country, _avatarUrl, _true_name, 
+      _qq, _wechat, _active)
+    values (#{id,jdbcType=INTEGER}, #{openid,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{school,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, 
+      #{gender,jdbcType=INTEGER}, #{city,jdbcType=VARCHAR}, #{province,jdbcType=VARCHAR}, 
+      #{country,jdbcType=VARCHAR}, #{avatarurl,jdbcType=VARCHAR}, #{trueName,jdbcType=VARCHAR}, 
+      #{qq,jdbcType=VARCHAR}, #{wechat,jdbcType=VARCHAR}, #{active,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="edu.qust.market.bean.User" useGeneratedKeys="true" keyProperty="id" >
     insert into tb_user
@@ -125,8 +131,11 @@
       <if test="id != null" >
         _id,
       </if>
-      <if test="name != null" >
-        _name,
+      <if test="openid != null" >
+        _openid,
+      </if>
+      <if test="nickname != null" >
+        _nickName,
       </if>
       <if test="address != null" >
         _address,
@@ -137,11 +146,20 @@
       <if test="phone != null" >
         _phone,
       </if>
-      <if test="sex != null" >
-        _sex,
+      <if test="gender != null" >
+        _gender,
       </if>
-      <if test="iconId != null" >
-        _icon_id,
+      <if test="city != null" >
+        _city,
+      </if>
+      <if test="province != null" >
+        _province,
+      </if>
+      <if test="country != null" >
+        _country,
+      </if>
+      <if test="avatarurl != null" >
+        _avatarUrl,
       </if>
       <if test="trueName != null" >
         _true_name,
@@ -160,8 +178,11 @@
       <if test="id != null" >
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="address != null" >
         #{address,jdbcType=VARCHAR},
@@ -172,11 +193,20 @@
       <if test="phone != null" >
         #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="sex != null" >
-        #{sex,jdbcType=INTEGER},
+      <if test="gender != null" >
+        #{gender,jdbcType=INTEGER},
       </if>
-      <if test="iconId != null" >
-        #{iconId,jdbcType=VARCHAR},
+      <if test="city != null" >
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarurl != null" >
+        #{avatarurl,jdbcType=VARCHAR},
       </if>
       <if test="trueName != null" >
         #{trueName,jdbcType=VARCHAR},
@@ -204,8 +234,11 @@
       <if test="record.id != null" >
         _id = #{record.id,jdbcType=INTEGER},
       </if>
-      <if test="record.name != null" >
-        _name = #{record.name,jdbcType=VARCHAR},
+      <if test="record.openid != null" >
+        _openid = #{record.openid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.nickname != null" >
+        _nickName = #{record.nickname,jdbcType=VARCHAR},
       </if>
       <if test="record.address != null" >
         _address = #{record.address,jdbcType=VARCHAR},
@@ -216,11 +249,20 @@
       <if test="record.phone != null" >
         _phone = #{record.phone,jdbcType=VARCHAR},
       </if>
-      <if test="record.sex != null" >
-        _sex = #{record.sex,jdbcType=INTEGER},
+      <if test="record.gender != null" >
+        _gender = #{record.gender,jdbcType=INTEGER},
       </if>
-      <if test="record.iconId != null" >
-        _icon_id = #{record.iconId,jdbcType=VARCHAR},
+      <if test="record.city != null" >
+        _city = #{record.city,jdbcType=VARCHAR},
+      </if>
+      <if test="record.province != null" >
+        _province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.country != null" >
+        _country = #{record.country,jdbcType=VARCHAR},
+      </if>
+      <if test="record.avatarurl != null" >
+        _avatarUrl = #{record.avatarurl,jdbcType=VARCHAR},
       </if>
       <if test="record.trueName != null" >
         _true_name = #{record.trueName,jdbcType=VARCHAR},
@@ -242,12 +284,16 @@
   <update id="updateByExample" parameterType="map" >
     update tb_user
     set _id = #{record.id,jdbcType=INTEGER},
-      _name = #{record.name,jdbcType=VARCHAR},
+      _openid = #{record.openid,jdbcType=VARCHAR},
+      _nickName = #{record.nickname,jdbcType=VARCHAR},
       _address = #{record.address,jdbcType=VARCHAR},
       _school = #{record.school,jdbcType=VARCHAR},
       _phone = #{record.phone,jdbcType=VARCHAR},
-      _sex = #{record.sex,jdbcType=INTEGER},
-      _icon_id = #{record.iconId,jdbcType=VARCHAR},
+      _gender = #{record.gender,jdbcType=INTEGER},
+      _city = #{record.city,jdbcType=VARCHAR},
+      _province = #{record.province,jdbcType=VARCHAR},
+      _country = #{record.country,jdbcType=VARCHAR},
+      _avatarUrl = #{record.avatarurl,jdbcType=VARCHAR},
       _true_name = #{record.trueName,jdbcType=VARCHAR},
       _qq = #{record.qq,jdbcType=VARCHAR},
       _wechat = #{record.wechat,jdbcType=VARCHAR},
@@ -259,8 +305,11 @@
   <update id="updateByPrimaryKeySelective" parameterType="edu.qust.market.bean.User" >
     update tb_user
     <set >
-      <if test="name != null" >
-        _name = #{name,jdbcType=VARCHAR},
+      <if test="openid != null" >
+        _openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null" >
+        _nickName = #{nickname,jdbcType=VARCHAR},
       </if>
       <if test="address != null" >
         _address = #{address,jdbcType=VARCHAR},
@@ -271,11 +320,20 @@
       <if test="phone != null" >
         _phone = #{phone,jdbcType=VARCHAR},
       </if>
-      <if test="sex != null" >
-        _sex = #{sex,jdbcType=INTEGER},
+      <if test="gender != null" >
+        _gender = #{gender,jdbcType=INTEGER},
       </if>
-      <if test="iconId != null" >
-        _icon_id = #{iconId,jdbcType=VARCHAR},
+      <if test="city != null" >
+        _city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="province != null" >
+        _province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null" >
+        _country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="avatarurl != null" >
+        _avatarUrl = #{avatarurl,jdbcType=VARCHAR},
       </if>
       <if test="trueName != null" >
         _true_name = #{trueName,jdbcType=VARCHAR},
@@ -294,12 +352,16 @@
   </update>
   <update id="updateByPrimaryKey" parameterType="edu.qust.market.bean.User" >
     update tb_user
-    set _name = #{name,jdbcType=VARCHAR},
+    set _openid = #{openid,jdbcType=VARCHAR},
+      _nickName = #{nickname,jdbcType=VARCHAR},
       _address = #{address,jdbcType=VARCHAR},
       _school = #{school,jdbcType=VARCHAR},
       _phone = #{phone,jdbcType=VARCHAR},
-      _sex = #{sex,jdbcType=INTEGER},
-      _icon_id = #{iconId,jdbcType=VARCHAR},
+      _gender = #{gender,jdbcType=INTEGER},
+      _city = #{city,jdbcType=VARCHAR},
+      _province = #{province,jdbcType=VARCHAR},
+      _country = #{country,jdbcType=VARCHAR},
+      _avatarUrl = #{avatarurl,jdbcType=VARCHAR},
       _true_name = #{trueName,jdbcType=VARCHAR},
       _qq = #{qq,jdbcType=VARCHAR},
       _wechat = #{wechat,jdbcType=VARCHAR},

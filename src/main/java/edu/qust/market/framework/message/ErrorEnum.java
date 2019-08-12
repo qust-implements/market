@@ -19,7 +19,7 @@ public enum ErrorEnum {
     private int errorCode;
     
     // 构造方法
-    private ErrorEnum(String errorName, int errorCode) {
+    ErrorEnum(String errorName, int errorCode) {
         this.errorName = errorName;
         this.errorCode = errorCode;
     }
