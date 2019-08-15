@@ -5,7 +5,9 @@ import java.io.Serializable;
 public class User implements Serializable {
     private Integer id;
 
-    private String name;
+    private String openid;
+
+    private String nickName;
 
     private String address;
 
@@ -13,9 +15,15 @@ public class User implements Serializable {
 
     private String phone;
 
-    private Integer sex;
+    private Integer gender;
 
-    private String iconId;
+    private String city;
+
+    private String province;
+
+    private String country;
+
+    private String avatarurl;
 
     private String trueName;
 
@@ -35,12 +43,20 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getOpenid() {
+        return openid;
     }
 
-    public void setName(String name) {
-        this.name = name == null ? null : name.trim();
+    public void setOpenid(String openid) {
+        this.openid = openid == null ? null : openid.trim();
+    }
+
+    public String getNickname() {
+        return nickName;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickName = nickname == null ? null : nickname.trim();
     }
 
     public String getAddress() {
@@ -67,20 +83,44 @@ public class User implements Serializable {
         this.phone = phone == null ? null : phone.trim();
     }
 
-    public Integer getSex() {
-        return sex;
+    public Integer getGender() {
+        return gender;
     }
 
-    public void setSex(Integer sex) {
-        this.sex = sex;
+    public void setGender(Integer gender) {
+        this.gender = gender;
     }
 
-    public String getIconId() {
-        return iconId;
+    public String getCity() {
+        return city;
     }
 
-    public void setIconId(String iconId) {
-        this.iconId = iconId == null ? null : iconId.trim();
+    public void setCity(String city) {
+        this.city = city == null ? null : city.trim();
+    }
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province == null ? null : province.trim();
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country == null ? null : country.trim();
+    }
+
+    public String getAvatarurl() {
+        return avatarurl;
+    }
+
+    public void setAvatarurl(String avatarurl) {
+        this.avatarurl = avatarurl == null ? null : avatarurl.trim();
     }
 
     public String getTrueName() {
@@ -122,12 +162,16 @@ public class User implements Serializable {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", name=").append(name);
+        sb.append(", openid=").append(openid);
+        sb.append(", nickname=").append(nickName);
         sb.append(", address=").append(address);
         sb.append(", school=").append(school);
         sb.append(", phone=").append(phone);
-        sb.append(", sex=").append(sex);
-        sb.append(", iconId=").append(iconId);
+        sb.append(", gender=").append(gender);
+        sb.append(", city=").append(city);
+        sb.append(", province=").append(province);
+        sb.append(", country=").append(country);
+        sb.append(", avatarurl=").append(avatarurl);
         sb.append(", trueName=").append(trueName);
         sb.append(", qq=").append(qq);
         sb.append(", wechat=").append(wechat);

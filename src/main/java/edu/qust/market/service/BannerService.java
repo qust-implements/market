@@ -16,6 +16,6 @@ public class BannerService {
 
     public List<Banner> getBanner(){
         BannerExample bannerExample = new BannerExample();
-        return bannerMapper.selectByExample(bannerExample );
+        return bannerMapper.selectByExample(bannerExample);
     }
 }
