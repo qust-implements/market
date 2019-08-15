@@ -8,6 +8,7 @@ import edu.qust.market.framework.message.ErrorEnum;
 import edu.qust.market.framework.message.Message;
 import edu.qust.market.mapper.StuffMapper;
 import edu.qust.market.service.StuffService;
+import edu.qust.market.utils.FileUpload;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
 import org.slf4j.Logger;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.rmi.MarshalException;
 import java.util.List;
 
@@ -53,6 +55,28 @@ public class StuffController {
         try{
             stuffService.getStuffByCategory(cid,webModel);
             return Message.createSuccessMessage(webModel);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Message.createFailureMessage(ErrorEnum.UnknowError);
+        }
+    }
+
+    @RequestMapping("/searchByKeyWords")
+    public Message searchByKeyWords(@RequestParam("keyWords") String keyWords, WebModel webModel){
+        try{
+            stuffService.searchByKeyWords(keyWords,webModel);
+            return Message.createSuccessMessage(webModel);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Message.createFailureMessage(ErrorEnum.UnknowError);
+        }
+    }
+
+    @RequestMapping("/upload")
+    public Message uploadFile(HttpServletRequest httpServletRequest){
+        try{
+            String url = FileUpload.savaFile(httpServletRequest);
+            return Message.createSuccessMessage(url);
         }catch (Exception e){
             e.printStackTrace();
             return Message.createFailureMessage(ErrorEnum.UnknowError);

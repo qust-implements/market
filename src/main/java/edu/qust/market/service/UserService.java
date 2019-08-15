@@ -6,6 +6,8 @@ import edu.qust.market.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserService {
 
@@ -28,5 +30,12 @@ public class UserService {
         UserExample.Criteria uec = userExample.createCriteria();
         uec.andOpenidEqualTo(user.getOpenid());
         return userMapper.updateByExampleSelective(user,userExample);
+    }
+
+    public List<User> selectIdByOpenId(String openId){
+        UserExample userExample = new UserExample();
+        UserExample.Criteria uec = userExample.createCriteria();
+        uec.andOpenidEqualTo(openId);
+        return userMapper.selectByExample(userExample);
     }
 }

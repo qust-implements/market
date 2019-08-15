@@ -58,6 +58,34 @@ public class StuffService {
         webModel.setData(newlist);
     }
 
+    //搜索商品
+    public void searchByKeyWords(String keyWords,WebModel webModel){
+        StuffExample stuffExample = new StuffExample();
+        stuffExample.setLimitStart(webModel.getLimitStart());
+        stuffExample.setPageSize(webModel.getPs());
+        stuffExample.or().andStuffNameLike("%" + keyWords + "%");
+        stuffExample.or().andStuffInfoLike("%" + keyWords + "%");
+        int count = stuffMapper.countByExample(stuffExample);
+        List<Stuff> list =  stuffMapper.selectByExample(stuffExample);
+        webModel.setTotalCount(count);
+        List<JSONObject> newlist = new ArrayList<>();
+        setStuffImg(list, newlist);
+        webModel.setData(newlist);
+    }
+
+    public void selectStuffByUid(long id,WebModel webModel){
+        StuffExample stuffExample = new StuffExample();
+        stuffExample.setLimitStart(webModel.getLimitStart());
+        stuffExample.setPageSize(webModel.getPs());
+        StuffExample.Criteria sec = stuffExample.createCriteria();
+        sec.andUserIdEqualTo(id);
+        int count = stuffMapper.countByExample(stuffExample);
+        List<Stuff> list = stuffMapper.selectByExample(stuffExample);
+        List<JSONObject> newlist = new ArrayList<>();
+        setStuffImg(list, newlist);
+        webModel.setTotalCount(count);
+        webModel.setData(newlist);
+    }
 
     //向返回数据中添加图片
     public void setStuffImg(List<Stuff> list, List<JSONObject> newlist) {
