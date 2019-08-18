@@ -102,13 +102,13 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="edu.qust.market.bean.Discuss" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insert" parameterType="edu.qust.market.bean.Discuss" useGeneratedKeys="true" keyProperty="discussId" >
     insert into tb_discuss (DISCUSS_ID, DISCUSS_DESC, DISCUSS_TIME, 
       USER_ID, STUFF_ID)
     values (#{discussId,jdbcType=BIGINT}, #{discussDesc,jdbcType=VARCHAR}, #{discussTime,jdbcType=BIGINT}, 
       #{userId,jdbcType=BIGINT}, #{stuffId,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="edu.qust.market.bean.Discuss" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insertSelective" parameterType="edu.qust.market.bean.Discuss" useGeneratedKeys="true" keyProperty="discussId" >
     insert into tb_discuss
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="discussId != null" >

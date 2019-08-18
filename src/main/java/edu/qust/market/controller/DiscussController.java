@@ -1,5 +1,6 @@
 package edu.qust.market.controller;
 
+import edu.qust.market.bean.Discuss;
 import edu.qust.market.framework.bean.WebModel;
 import edu.qust.market.framework.message.ErrorEnum;
 import edu.qust.market.framework.message.Message;
@@ -34,7 +35,7 @@ public class DiscussController {
     }
 
     @RequestMapping("/getDiscussByUserId")
-    public Message getDiscussByUSerId(@RequestParam("token") String token, WebModel webModel){
+    public Message getDiscussByUserId(@RequestParam("token") String token, WebModel webModel){
         try{
             String openid = sessionService.selectSessionByToken(token).get(0).getId();
             long id = userService.selectIdByOpenId(openid).get(0).getId();
@@ -46,5 +47,19 @@ public class DiscussController {
         }
     }
 
+    @RequestMapping("/addDiscuss")
+    public Message addDiscuss(@RequestParam("token") String token,Discuss discuss){
+        try{
+            String openId = sessionService.selectSessionByToken(token).get(0).getId();
+            long id = userService.selectIdByOpenId(openId).get(0).getId();
+            discuss.setUserId(id);
+            discuss.setDiscussTime(System.currentTimeMillis());
+            discussService.insertDiscuss(discuss);
+            return Message.createSuccessMessage();
+        }catch (Exception e){
+            e.printStackTrace();
+            return Message.createFailureMessage(ErrorEnum.UnknowError);
+        }
+    }
 
 }
