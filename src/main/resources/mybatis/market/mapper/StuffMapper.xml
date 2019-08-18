@@ -117,7 +117,7 @@
       #{cateId,jdbcType=BIGINT}, #{createTime,jdbcType=BIGINT}, #{modifyTime,jdbcType=BIGINT}
       )
   </insert>
-  <insert id="insertSelective" parameterType="edu.qust.market.bean.Stuff" useGeneratedKeys="true" keyProperty="id" >
+  <insert id="insertSelective" parameterType="edu.qust.market.bean.Stuff"  useGeneratedKeys="true" keyProperty="stuffId">
     insert into tb_stuff
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="stuffId != null" >

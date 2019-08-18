@@ -2,6 +2,8 @@ package edu.qust.market.utils;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.util.ClassUtils;
+import org.springframework.util.ResourceUtils;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -34,9 +36,9 @@ public class FileUpload {
         }
 
 
-        String time = DateUtils.getCurrDate(DateUtils.LONG_DATE_FORMAT);
+        String time = DateUtils.getCurrDate(DateUtils.LONG_DATE_FORMAT).replace("-","_");
         Long name = System.currentTimeMillis();
-        FileOutputStream fos = new FileOutputStream("C:/Users/gao94/Idea_ptoject/market/target/" + time + "-" + name + "." + type);
+        FileOutputStream fos = new FileOutputStream(ResourceUtils.getURL("classpath:static/goods_images/").getPath() + time + "_" + name + "." + type);
         byte[] by = new byte[1024];
         int len = 0;
         while ((len = fis.read(by)) != -1) {
@@ -44,6 +46,11 @@ public class FileUpload {
         }
         fos.close();
         fis.close();
-        return "/upload/" + time + "-" + name + "." + type;
+        return  "goods_images/" + time + "_" + name + "." + type;
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
+        System.out.println(ResourceUtils.getURL("classpath:static/goods_images/").getPath());
+
     }
 }

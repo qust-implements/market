@@ -87,6 +87,10 @@ public class StuffService {
         webModel.setData(newlist);
     }
 
+    public int insertStuff(Stuff stuff){
+        return stuffMapper.insertSelective(stuff);
+    }
+
     //向返回数据中添加图片
     public void setStuffImg(List<Stuff> list, List<JSONObject> newlist) {
         for(Stuff s : list){

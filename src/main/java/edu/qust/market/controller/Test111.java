@@ -15,23 +15,23 @@ import java.util.List;
 
 @RestController
 public class Test111 {
-    @Autowired
-    private DiscussMapper discussMapper;
-
-    public void slect() {
-        Discuss discuss = new Discuss();
-        discuss.setDiscussDesc("一个二手小灯还敢卖原价？");
-        discuss.setUserId(Long.parseLong("2"));
-        discuss.setStuffId(Long.parseLong("1"));
-        discuss.setDiscussTime(Long.parseLong("0"));
-        discussMapper.insertSelective(discuss);
-    }
-
-    public static void main(String[] args) {
-        Test111 test111 = new Test111();
-        for (int i = 0; i < 20; i++) {
-            test111.slect();
-        }
-    }
+//    @Autowired
+//    private DiscussMapper discussMapper;
+//
+//    public void slect() {
+//        Discuss discuss = new Discuss();
+//        discuss.setDiscussDesc("一个二手小灯还敢卖原价？");
+//        discuss.setUserId(Long.parseLong("2"));
+//        discuss.setStuffId(Long.parseLong("1"));
+//        discuss.setDiscussTime(Long.parseLong("0"));
+//        discussMapper.insertSelective(discuss);
+//    }
+//
+//    public static void main(String[] args) {
+//        Test111 test111 = new Test111();
+//        for (int i = 0; i < 20; i++) {
+//            test111.slect();
+//        }
+//    }
 
 }

@@ -5,7 +5,9 @@ import edu.qust.market.bean.UserExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Component;
 
+@Component
 @Mapper
 public interface UserMapper {
     int countByExample(UserExample example);
