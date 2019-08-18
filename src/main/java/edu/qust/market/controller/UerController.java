@@ -27,37 +27,37 @@ public class UerController {
     private StuffService stuffService;
 
     @RequestMapping("/getUserStuff")
-    public Message getUserStuff(@RequestParam("token") String token, WebModel webModel){
-        try{
+    public Message getUserStuff(@RequestParam("token") String token, WebModel webModel) {
+        try {
             String openId = sessionService.selectSessionByToken(token).get(0).getId();
             int id = userService.selectIdByOpenId(openId).get(0).getId();
-            stuffService.selectStuffByUid(id,webModel);
+            stuffService.selectStuffByUid(id, webModel);
             return Message.createSuccessMessage(webModel);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return Message.createFailureMessage(ErrorEnum.UnknowError);
         }
     }
 
     @RequestMapping("/getUserAvatar")
-    public Message getUserAvatar(@RequestParam("id") int id){
-        try{
+    public Message getUserAvatar(@RequestParam("id") int id) {
+        try {
             String url = userService.selectUserAvatarById(id);
             return Message.createSuccessMessage(url);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return Message.createFailureMessage(ErrorEnum.UnknowError);
         }
     }
 
     @RequestMapping("/updataUserStuff")
-    public Message updataUserStuff(@RequestParam("token") String token, Stuff stuff){
-        try{
+    public Message updataUserStuff(@RequestParam("token") String token, Stuff stuff) {
+        try {
             String openId = sessionService.selectSessionByToken(token).get(0).getId();
             int id = userService.selectIdByOpenId(openId).get(0).getId();
             userService.updataStuffByStuffId(stuff);
             return Message.createSuccessMessage();
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return Message.createFailureMessage(ErrorEnum.UnknowError);
         }
