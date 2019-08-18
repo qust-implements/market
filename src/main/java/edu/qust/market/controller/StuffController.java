@@ -1,13 +1,17 @@
 package edu.qust.market.controller;
 
 
+import edu.qust.market.bean.File_form;
 import edu.qust.market.bean.Stuff;
 import edu.qust.market.bean.StuffExample;
 import edu.qust.market.framework.bean.WebModel;
 import edu.qust.market.framework.message.ErrorEnum;
 import edu.qust.market.framework.message.Message;
 import edu.qust.market.mapper.StuffMapper;
+import edu.qust.market.service.FileFormService;
+import edu.qust.market.service.SessionService;
 import edu.qust.market.service.StuffService;
+import edu.qust.market.service.UserService;
 import edu.qust.market.utils.FileUpload;
 import org.apache.juli.logging.Log;
 import org.apache.juli.logging.LogFactory;
@@ -27,57 +31,90 @@ public class StuffController {
 
     @Autowired
     private StuffService stuffService;
+    @Autowired
+    private SessionService sessionService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private FileFormService fileFormService;
 
     @RequestMapping("/selectAll")
-    public Message selectAll(WebModel webModel){
-        try{
+    public Message selectAll(WebModel webModel) {
+        try {
             stuffService.selectAll(webModel);
             return Message.createSuccessMessage(webModel);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return Message.createFailureMessage(ErrorEnum.UnknowError);
         }
     }
 
     @RequestMapping("/selectStuffById")
-    public Message selectStuffById(@RequestParam("id") Long id){
-        try{
+    public Message selectStuffById(@RequestParam("id") Long id) {
+        try {
             Stuff stuff = stuffService.selectStuffById(id);
             return Message.createSuccessMessage(stuff);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return Message.createFailureMessage(ErrorEnum.UnknowError);
         }
     }
 
     @RequestMapping("/selectStuffByCid")
-    public Message selectStuffByCid(@RequestParam("cid") Long cid, WebModel webModel){
-        try{
-            stuffService.getStuffByCategory(cid,webModel);
+    public Message selectStuffByCid(@RequestParam("cid") Long cid, WebModel webModel) {
+        try {
+            stuffService.getStuffByCategory(cid, webModel);
             return Message.createSuccessMessage(webModel);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return Message.createFailureMessage(ErrorEnum.UnknowError);
         }
     }
 
     @RequestMapping("/searchByKeyWords")
-    public Message searchByKeyWords(@RequestParam("keyWords") String keyWords, WebModel webModel){
-        try{
-            stuffService.searchByKeyWords(keyWords,webModel);
+    public Message searchByKeyWords(@RequestParam("keyWords") String keyWords, WebModel webModel) {
+        try {
+            stuffService.searchByKeyWords(keyWords, webModel);
             return Message.createSuccessMessage(webModel);
-        }catch (Exception e){
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Message.createFailureMessage(ErrorEnum.UnknowError);
+        }
+    }
+
+    @RequestMapping("/addStuffByToken")
+    public Message addStuffByToken(@RequestParam("token") String token, Stuff stuff) {
+        try {
+            String openId = sessionService.selectSessionByToken(token).get(0).getId();
+            long userId = userService.selectIdByOpenId(openId).get(0).getId();
+            stuff.setUserId(userId);
+            stuff.setCreateTime(System.currentTimeMillis());
+            System.out.println(stuff);
+            stuffService.insertStuff(stuff);
+            return Message.createSuccessMessage(stuff.getStuffId());
+        } catch (Exception e) {
             e.printStackTrace();
             return Message.createFailureMessage(ErrorEnum.UnknowError);
         }
     }
 
     @RequestMapping("/upload")
-    public Message uploadFile(HttpServletRequest httpServletRequest){
-        try{
-            String url = FileUpload.savaFile(httpServletRequest);
-            return Message.createSuccessMessage(url);
-        }catch (Exception e){
+    public Message uploadFile(HttpServletRequest httpServletRequest,@RequestParam("token") String token, Stuff stuff) {
+        try {
+            String openId = sessionService.selectSessionByToken(token).get(0).getId();
+            long userId = userService.selectIdByOpenId(openId).get(0).getId();
+            stuff.setUserId(userId);
+            stuff.setCreateTime(System.currentTimeMillis());
+            System.out.println(stuff);
+            stuffService.insertStuff(stuff);
+            File_form file_form = new File_form();
+            file_form.setUrl(FileUpload.savaFile(httpServletRequest));
+            file_form.setTable("tb_stuff");
+            file_form.setTypeId(1);
+            file_form.setTableId((Integer.parseInt(stuff.getStuffId()+ "")));
+            fileFormService.insertFile(file_form);
+            return Message.createSuccessMessage();
+        } catch (Exception e) {
             e.printStackTrace();
             return Message.createFailureMessage(ErrorEnum.UnknowError);
         }

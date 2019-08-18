@@ -20,4 +20,8 @@ public class FileFormService {
         fec.andTableIdEqualTo(id);
         return file_formMapper.selectByExample(file_formExample);
     }
+
+    public int insertFile(File_form file_form){
+        return file_formMapper.insertSelective(file_form);
+    }
 }

@@ -1,6 +1,7 @@
 package edu.qust.market.controller;
 
 import edu.qust.market.bean.Session;
+import edu.qust.market.bean.Stuff;
 import edu.qust.market.framework.bean.WebModel;
 import edu.qust.market.framework.message.ErrorEnum;
 import edu.qust.market.framework.message.Message;
@@ -25,7 +26,7 @@ public class UerController {
     @Autowired
     private StuffService stuffService;
 
-    @RequestMapping("getUserStuff")
+    @RequestMapping("/getUserStuff")
     public Message getUserStuff(@RequestParam("token") String token, WebModel webModel){
         try{
             String openId = sessionService.selectSessionByToken(token).get(0).getId();
@@ -37,4 +38,29 @@ public class UerController {
             return Message.createFailureMessage(ErrorEnum.UnknowError);
         }
     }
+
+    @RequestMapping("/getUserAvatar")
+    public Message getUserAvatar(@RequestParam("id") int id){
+        try{
+            String url = userService.selectUserAvatarById(id);
+            return Message.createSuccessMessage(url);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Message.createFailureMessage(ErrorEnum.UnknowError);
+        }
+    }
+
+    @RequestMapping("/updataUserStuff")
+    public Message updataUserStuff(@RequestParam("token") String token, Stuff stuff){
+        try{
+            String openId = sessionService.selectSessionByToken(token).get(0).getId();
+            int id = userService.selectIdByOpenId(openId).get(0).getId();
+            userService.updataStuffByStuffId(stuff);
+            return Message.createSuccessMessage();
+        }catch (Exception e){
+            e.printStackTrace();
+            return Message.createFailureMessage(ErrorEnum.UnknowError);
+        }
+    }
+
 }
